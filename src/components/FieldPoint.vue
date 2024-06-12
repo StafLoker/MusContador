@@ -1,6 +1,6 @@
 <template lang="pug">
-v-row
-  span {{ header }}
+v-row.justify-center
+  span {{ props.header }}
 v-row
   v-btn.reduce(
     icon="mdi-menu-left"
@@ -19,26 +19,43 @@ v-row
 </template>
 
 <script lang="ts" setup>
-defineProps({
-  header: { type: String, required: true },
-  value: { type: Number, required: true }
-})
+import { defineProps, defineEmits, ref, watch } from "vue"
+
+const props = defineProps<{
+  header: string
+  value: number
+}>()
+
+const emit = defineEmits<{
+  (e: "update:value", value: number): void
+}>()
+
+const localValue = ref(props.value)
+
+watch(
+  () => props.value,
+  newVal => {
+    localValue.value = newVal
+  }
+)
 
 function increase() {
-  this.value++
+  localValue.value++
+  emit("update:value", localValue.value)
 }
 
 function reduce() {
-  this.value--
+  localValue.value--
+  emit("update:value", localValue.value)
 }
 </script>
 
 <style>
-.reduce{
-  color: red
+.reduce {
+  color: rgb(228, 36, 36);
 }
 
-.increase{
-  color: green
+.increase {
+  color: rgb(31, 225, 31);
 }
 </style>

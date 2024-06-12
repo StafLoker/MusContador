@@ -3,46 +3,54 @@ v-app
   v-main
     v-container
       v-row.justify-center
-        h1 MusContador
+        h1 Contador de Mus
       v-row
         v-col
           FieldPoint(
-            header="A",
-            :value="0"
+            header="A"
+            :value="parentValue"
+            @update:value="handleValueUpdate"
           )
         v-col
           FieldPoint(
-            header="B",
-            :value="0"
+            header="B"
+            :value="parentValue"
+            @update:value="handleValueUpdate"
           )
       v-row
         v-col
           FieldPoint(
-            header="Grande",
-            :value="0"
+            header="Grande"
+            :value="parentValue"
+            @update:value="handleValueUpdate"
           )
         v-col
           FieldPoint(
-            header="Chicas",
-            :value="0"
+            header="Chicas"
+            :value="parentValue"
+            @update:value="handleValueUpdate"
           )
         v-col
           FieldPoint(
-            header="Pares",
-            :value="0"
+            header="Pares"
+            :value="parentValue"
+            @update:value="handleValueUpdate"
           )
         v-col
           FieldPoint(
-            header="Juego",
-            :value="0"
+            header="Juego"
+            :value="parentValue"
+            @update:value="handleValueUpdate"
           )
       v-row
         v-col
           v-btn A
         v-col
           v-btn B
-      v-row
-        v-btn Reiniciar
+      v-row.justify-end
+        v-btn(
+          @click="parentValue = 0"
+        ) Reiniciar
     v-footer
       span MusContador
       v-spacer
@@ -58,5 +66,11 @@ v-app
 </template>
 
 <script lang="ts" setup>
-//
+import { ref } from 'vue';
+
+const parentValue = ref(0);
+
+function handleValueUpdate(newValue: number) {
+  parentValue.value = newValue;
+}
 </script>
